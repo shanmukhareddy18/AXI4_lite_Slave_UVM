@@ -31,7 +31,7 @@ begin
         tr.RRESP=vif.out_mon_cb.RRESP;
         tr.RVALID=vif.out_mon_cb.RVALID;
         `uvm_info("OUT_MON", $sformatf(
-      "DUT Outputs -> AWREADY:%b | WREADY:%0b | BRESP:%0b | BVALID:%0b | ARREADY:%b | RDATA:%0b | RRESP:%0b | RVALID:%0b  ",
+      "DUT Outputs -> AWREADY:%b | WREADY:%0b | BRESP:%0b | BVALID:%0b | ARREADY:%b | RDATA:%0d | RRESP:%0b | RVALID:%0b  ",
       tr.AWREADY, tr.WREADY, tr.BRESP, tr.BVALID, tr.ARREADY, tr.RDATA, tr.RRESP, tr.RVALID), UVM_NONE)
         out_ap.write(tr);
        end

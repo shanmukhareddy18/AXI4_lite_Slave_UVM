@@ -31,13 +31,13 @@ task run_phase(uvm_phase phase);
   s3=sequence3::type_id::create("s3");
   s4=sequence4::type_id::create("s4");
   //s5=sequence5::type_id::create("s5");
-  fork
+ // fork
    // s1.start(e.aa.seqr);
     s3.start(e.aa.ws);
     s3.start(e.aa.ws);
    // s1.start(e.aa.seqr);
     s4.start(e.aa.rs);
-  join
+ // join
    // s1.start(e.aa.ws);
   #50;
   phase.drop_objection(this);

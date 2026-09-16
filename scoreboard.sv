@@ -69,7 +69,7 @@ else
    
    if(waddr_done && wdata_done) begin
      BVALID=1;
-     if(addr > 32'h3C)
+     if(addr > 32'h40)
        BRESP=2'b11;
      else if(addr[1:0]!=2'b00 || (addr>=32'h28 && addr <=32'h30)  )
         BRESP=2'b10;
@@ -82,7 +82,7 @@ else
    if(inp_tx.ARVALID && out_tx.ARREADY)
     begin
      RVALID=1;
-     if(inp_tx.ARADDR > 32'h3C)
+     if(inp_tx.ARADDR > 32'h40)
        RRESP=2'b11;
      else if(inp_tx.ARADDR[1:0]!=2'b00  || (inp_tx.ARADDR>=32'h34 && inp_tx.ARADDR <=32'h38)  )
        RRESP=2'b10;

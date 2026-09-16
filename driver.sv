@@ -137,7 +137,7 @@ task run_phase(uvm_phase phase);
 task write_trans(seq_item req);
 fork
  begin
-  vif.drv_cb.AWADDR<=32'h3D;
+  vif.drv_cb.AWADDR<=32'h28;
   vif.drv_cb.AWPROT<=req.AWPROT;
   vif.drv_cb.AWVALID<=req.AWVALID;
   if(req.AWVALID)begin
@@ -148,7 +148,7 @@ fork
  end
  begin
   vif.drv_cb.WDATA<=req.WDATA;
-  vif.drv_cb.WSTRB<=4'b1111;
+  vif.drv_cb.WSTRB<=req.WSTRB;
   vif.drv_cb.WVALID<=req.WVALID;
   if(req.WVALID)begin
     do @(vif.drv_cb);
@@ -170,7 +170,7 @@ endtask
 task read_trans(seq_item req);
   fork
    begin
-     vif.drv_cb.ARADDR<=32'h3D;
+     vif.drv_cb.ARADDR<=32'h28;
     vif.drv_cb.ARPROT<=req.ARPROT;
     vif.drv_cb.ARVALID<=req.ARVALID;
     if(req.ARVALID)begin

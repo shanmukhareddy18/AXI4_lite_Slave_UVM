@@ -23,17 +23,15 @@ sequence1 s1;
 sequence2 s2;
 sequence3 s3;
 sequence4 s4;
-//sequence5 s5;
 task run_phase(uvm_phase phase);
   phase.raise_objection(this);
   s1=sequence1::type_id::create("s1");
   s2=sequence2::type_id::create("s2");
   s3=sequence3::type_id::create("s3");
   s4=sequence4::type_id::create("s4");
-  //s5=sequence5::type_id::create("s5");
  // fork
    // s1.start(e.aa.seqr);
-    s3.start(e.aa.ws);
+    s2.start(e.aa.ws);
     s3.start(e.aa.ws);
    // s1.start(e.aa.seqr);
     s4.start(e.aa.rs);

@@ -32,7 +32,7 @@ tr.ARPROT=vif.inp_mon_cb.ARPROT;
 tr.ARVALID=vif.inp_mon_cb.ARVALID;
 tr.RREADY=vif.inp_mon_cb.RREADY;
 tr.reset=vif.inp_mon_cb.ARESETn;
-`uvm_info("INP_MON",$sformatf("AWADDR=%d ,AWPROT=%b ,AWVALID=%b ,WDATA=%d ,WVALID=%b ,WSTRB=%b ,BREADY=%b ,ARADDR=%d ,ARPROT=%b ,ARVALID=%b ,RREADY=%b",
+`uvm_info("INP_MON",$sformatf("AWADDR=%d ,AWPROT=%b ,AWVALID=%b ,WDATA=%h ,WVALID=%b ,WSTRB=%b ,BREADY=%b ,ARADDR=%d ,ARPROT=%b ,ARVALID=%b ,RREADY=%b",
                tr.AWADDR,tr.AWPROT,tr.AWVALID,tr.WDATA,tr.WVALID,tr.WSTRB,tr.BREADY,tr.ARADDR,tr.ARPROT,tr.ARVALID,tr.RREADY),UVM_NONE)
 
 

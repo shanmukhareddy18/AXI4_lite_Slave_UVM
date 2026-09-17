@@ -18,7 +18,7 @@ function new(string name="sequence2");
 super.new(name);
 endfunction
 task body();
-repeat(10)  begin
+repeat(50)  begin
  req=seq_item::type_id::create("req");
  start_item(req);
   assert(req.randomize() with { AWVALID==1; WVALID==0;trans_type==1;BREADY==1; ARVALID==0; } )
@@ -37,7 +37,7 @@ function new(string name="sequence3");
 super.new(name);
 endfunction
 task body();
-repeat(10) begin
+repeat(50) begin
  req=seq_item::type_id::create("req");
  start_item(req);
   assert(req.randomize() with { AWVALID==0; WVALID==1;trans_type==1;BREADY==1; ARVALID==0; } )
@@ -57,7 +57,7 @@ super.new(name);
 endfunction
 task body();
  req=seq_item::type_id::create("req");
- repeat(10) begin
+ repeat(50) begin
  start_item(req);
   assert(req.randomize() with { AWVALID==0; WVALID==0;trans_type==0;BREADY==0; ARVALID==1;RREADY==1; } )
  finish_item(req);end

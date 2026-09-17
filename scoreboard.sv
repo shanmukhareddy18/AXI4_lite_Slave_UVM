@@ -45,7 +45,8 @@ task reference();
 exp.RDATA=r_data;
 exp.RRESP=RRESP;
 exp.RVALID=RVALID;
-
+exp.BVALID=BVALID;
+exp.BRESP=BRESP;
 if(!inp_tx.reset)begin
  r_data=0;
   BRESP=0;BVALID=0;r_data=0; RRESP=0;RVALID=0;
@@ -59,6 +60,18 @@ else
    if(BVALID)begin
          waddr_done=0;wdata_done=0;BVALID=0;BRESP=0;
       end
+   if(waddr_done && wdata_done) begin
+     BVALID=1;
+     if(addr > 32'h40)
+       BRESP=2'b11;
+     else if(addr[1:0]!=2'b00 || (addr>=32'h28 && addr <=32'h30)  )
+        BRESP=2'b10;
+     else begin
+        BRESP=2'b00;
+        mem[addr>>2]={ {8{wstrb[3]}},{8{wstrb[2]}},{8{wstrb[1]}},{8{wstrb[0]}} }&w_data;
+       end
+    end
+
    if(inp_tx.AWVALID && out_tx.AWREADY)begin
     waddr_done=1;
     addr=inp_tx.AWADDR; end
@@ -67,7 +80,7 @@ else
     w_data=inp_tx.WDATA;
     wstrb=inp_tx.WSTRB;  end
    
-   if(waddr_done && wdata_done) begin
+ /*  if(waddr_done && wdata_done) begin
      BVALID=1;
      if(addr > 32'h40)
        BRESP=2'b11;
@@ -77,7 +90,7 @@ else
         BRESP=2'b00;
         mem[addr>>2]={ {8{wstrb[3]}},{8{wstrb[2]}},{8{wstrb[1]}},{8{wstrb[0]}} }&w_data; 
        end
-    end
+    end */
 
    if(inp_tx.ARVALID && out_tx.ARREADY)
     begin
@@ -95,17 +108,29 @@ else
  end
  `uvm_info("SCB", $sformatf(
       "EXP -> waddr_done=%b, wdata_done=%b, addr=%d, w_data=%d,  mem[addr]=%d | BRESP:%0b | BVALID:%0b |  RDATA:%0d | RRESP:%0b | RVALID:%0b  ",
-       waddr_done,wdata_done,addr,w_data,mem[addr>>2],BRESP, BVALID, exp.RDATA, exp.RRESP, exp.RVALID), UVM_NONE)
-  if(exp.RDATA==out_tx.RDATA && exp.RRESP==out_tx.RRESP && exp.RVALID==out_tx.RVALID)
-   begin
-    success++;
-    `uvm_info("SCB",$sformatf("SUCCESS COUNT=%d",success),UVM_NONE);end
-  else
-   begin
-    fail++;
-   `uvm_info("SCB",$sformatf("FAIL COUNT=%d",fail),UVM_NONE);
-   end
+       waddr_done,wdata_done,addr,w_data,mem[addr>>2],exp.BRESP, exp.BVALID, exp.RDATA, exp.RRESP, exp.RVALID), UVM_NONE)
+  if(exp.BVALID)
+  begin
+   if(exp.BRESP==out_tx.BRESP && exp.BVALID==out_tx.BVALID)begin 
+     success++;
+    `uvm_info("SCB",$sformatf("SUCCESS COUNT=%d",success),UVM_NONE) end
+   else
+    begin
+     fail++;
+    `uvm_info("SCB",$sformatf("FAIL COUNT=%d",fail),UVM_NONE)
+    end
+  end
+ if(exp.RVALID)
+  begin  
+   if(exp.RDATA==out_tx.RDATA && exp.RRESP==out_tx.RRESP && exp.RVALID==out_tx.RVALID) begin
+     success++;
+    `uvm_info("SCB",$sformatf("SUCCESS COUNT=%d",success),UVM_NONE) end
+   else
+    begin
+     fail++;
+    `uvm_info("SCB",$sformatf("FAIL COUNT=%d",fail),UVM_NONE)
+    end
+end
  `uvm_info("SCB","------------------------------------------------------------------", UVM_NONE)
-
 endtask
 endclass

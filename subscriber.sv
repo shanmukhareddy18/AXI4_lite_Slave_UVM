@@ -19,6 +19,7 @@ endfunction
 
 function void write(seq_item t);
  tr=t;
+ 
  cg.sample();
 endfunction
 endclass

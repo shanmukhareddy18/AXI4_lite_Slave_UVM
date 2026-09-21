@@ -13,6 +13,7 @@ package axi_pkg;
 `include "active_agent.sv"
 `include "passive_agent.sv"
 `include "scoreboard.sv"
+`uvm_analysis_imp_decl(_out)
 `include "subscriber.sv"
 `include "env.sv"
 `include "test.sv"

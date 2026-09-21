@@ -21,7 +21,7 @@ task body();
 repeat(50)  begin
  req=seq_item::type_id::create("req");
  start_item(req);
-  assert(req.randomize() with { AWADDR inside {0,4,8,12,16,20,24,28,32,36,60}; AWVALID==1; WVALID==0;trans_type==1;BREADY==1; ARVALID==0; } )
+  assert(req.randomize() with { AWADDR inside {0,4,8,12,16,20,24,28,32,36,60}; AWVALID==1; WVALID==0;trans_type==1;BREADY==0; ARVALID==0; } )
  finish_item(req);
 
  start_item(req);
@@ -38,10 +38,10 @@ function new(string name="sequence3");
 super.new(name);
 endfunction
 task body();
-repeat(10) begin
+repeat(50) begin
  req=seq_item::type_id::create("req");
  start_item(req);
-  assert(req.randomize() with { AWVALID==0; WVALID==1;trans_type==1;BREADY==1; ARVALID==0; } )
+  assert(req.randomize() with { AWVALID==0; WVALID==1;trans_type==1;BREADY==0; ARVALID==0; } )
  finish_item(req);
  start_item(req);
   assert(req.randomize() with {AWADDR inside {40,44,48}; AWVALID==1; WVALID==0;trans_type==1;BREADY==1; ARVALID==0; } )
@@ -57,10 +57,10 @@ function new(string name="sequence4");
 super.new(name);
 endfunction
 task body();
-repeat(10) begin
+repeat(50) begin
  req=seq_item::type_id::create("req");
  start_item(req);
-  assert(req.randomize() with { AWVALID==0; WVALID==1;trans_type==1;BREADY==1; ARVALID==0; } )
+  assert(req.randomize() with { AWVALID==0; WVALID==1;trans_type==1;BREADY==0; ARVALID==0; } )
  finish_item(req);
  start_item(req);
   assert(req.randomize() with {AWADDR inside {0,4,8,12,16,20,24,28,32,36,52,56,60}; AWVALID==1; WVALID==0;trans_type==1;BREADY==1; ARVALID==0; } )
@@ -76,10 +76,10 @@ function new(string name="sequence5");
 super.new(name);
 endfunction
 task body();
-repeat(5) begin
+repeat(50) begin
  req=seq_item::type_id::create("req");
  start_item(req);
-  assert(req.randomize() with { AWVALID==0; WVALID==1;trans_type==1;BREADY==1; ARVALID==0; } )
+  assert(req.randomize() with { AWVALID==0; WVALID==1;trans_type==1;BREADY==0; ARVALID==0; } )
  finish_item(req);
  start_item(req);
   assert(req.randomize() with {AWADDR inside {[0:63]}; AWADDR[1:0]!=2'b00; AWVALID==1; WVALID==0;trans_type==1;BREADY==1; ARVALID==0; } )
@@ -98,7 +98,7 @@ task body();
 repeat(50) begin
  req=seq_item::type_id::create("req");
  start_item(req);
-  assert(req.randomize() with { AWVALID==0; WVALID==1;trans_type==1;BREADY==1; ARVALID==0; } )
+  assert(req.randomize() with { AWVALID==0; WVALID==1;trans_type==1;BREADY==0; ARVALID==0; } )
  finish_item(req);
  start_item(req);
   assert(req.randomize() with { AWADDR>63; AWVALID==1; WVALID==0;trans_type==1;BREADY==1; ARVALID==0; } )
@@ -115,7 +115,7 @@ super.new(name);
 endfunction
 task body();
  req=seq_item::type_id::create("req");
- repeat(10) begin
+ repeat(50) begin
  start_item(req);
   assert(req.randomize() with { AWVALID==0; WVALID==0;trans_type==0;BREADY==0;ARADDR inside {0,4,8,12,16,20,24,28,32,36,40,44,48,60}; ARVALID==1;RREADY==1; } )
  finish_item(req);end
@@ -131,7 +131,7 @@ super.new(name);
 endfunction
 task body();
  req=seq_item::type_id::create("req");
- repeat(10) begin
+ repeat(50) begin
  start_item(req);
   assert(req.randomize() with { AWVALID==0; WVALID==0;trans_type==0;BREADY==0;ARADDR inside {52,56}; ARVALID==1;RREADY==1; } )
  finish_item(req);end
@@ -147,7 +147,7 @@ super.new(name);
 endfunction
 task body();
  req=seq_item::type_id::create("req");
- repeat(10) begin
+ repeat(50) begin
  start_item(req);
   assert(req.randomize() with { AWVALID==0; WVALID==0;trans_type==0;BREADY==0;ARADDR>63; ARVALID==1;RREADY==1; } )
  finish_item(req);end
@@ -163,7 +163,7 @@ super.new(name);
 endfunction
 task body();
  req=seq_item::type_id::create("req");
- repeat(10) begin
+ repeat(50) begin
  start_item(req);
   assert(req.randomize() with { AWVALID==0; WVALID==0;trans_type==0;BREADY==0;ARADDR inside {[0:63]}; ARADDR[1:0]!=2'b00; ARVALID==1;RREADY==1; } )
  finish_item(req);end

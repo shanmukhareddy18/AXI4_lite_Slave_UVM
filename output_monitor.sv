@@ -20,6 +20,7 @@ endfunction
 task run_phase(uvm_phase phase);
 begin
  tr=seq_item::type_id::create("tr");
+ 
  forever begin
 	  @(vif.out_mon_cb);
 	tr.AWREADY=vif.out_mon_cb.AWREADY;

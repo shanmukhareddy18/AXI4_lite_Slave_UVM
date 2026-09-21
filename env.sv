@@ -21,6 +21,7 @@ function void connect_phase(uvm_phase phase);
   	 super.connect_phase(phase);
 	aa.inp_mon.inp_ap.connect(scb.inp_fifo.analysis_export);
 	pa.out_mon.out_ap.connect(scb.out_fifo.analysis_export);
-	aa.inp_mon.inp_ap.connect(sub.ap);
+	aa.inp_mon.inp_ap.connect(sub.inp_ap);
+	pa.out_mon.out_ap.connect(sub.out_ap);
 endfunction
 endclass

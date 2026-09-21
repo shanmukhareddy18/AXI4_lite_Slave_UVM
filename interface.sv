@@ -40,6 +40,18 @@ clocking drv_cb @(posedge ACLK);
  input AWREADY,WREADY,ARREADY,BVALID,RVALID;
  output AWADDR,AWPROT,AWVALID,WDATA,WVALID,WSTRB,BREADY,ARADDR,ARPROT,ARVALID,RREADY;
 endclocking
+bvalid:assert property(
+   @(posedge ACLK)
+   disable iff(!ARESETn)
+   BVALID|=>!BVALID );
+rvalid:assert property (
+   @(posedge ACLK)
+   disable iff(!ARESETn)
+   RVALID|=>!RVALID );
+rchannel:assert property(
+   @(posedge ACLK)
+   disable iff(!ARESETn)
+   (ARREADY & ARVALID) |=>RVALID );
 
 modport INP_MON(clocking inp_mon_cb);
 modport DRV(clocking drv_cb);

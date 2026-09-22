@@ -7,44 +7,36 @@ seq_item out_tx;
 
 covergroup cg1;
  awaddr: coverpoint inp_tx.AWADDR {
-	bins rw={[0:39]};
-	bins r={[40:51]};
-	bins w={[52:59]};
-	bins rw_at3C={[60:63]};
+	bins rw={[0:39]} iff (inp_tx.AWADDR[1:0]==2'b00);
+	bins r={[40:51]} iff (inp_tx.AWADDR[1:0]==2'b00);
+	bins w={[52:59]} iff (inp_tx.AWADDR[1:0]==2'b00);
+	bins rw_at3C={[60:63]} iff (inp_tx.AWADDR[1:0]==2'b00);
 	bins OFB={[64:$]};
+        bins unalign={[0:63]} iff (inp_tx.AWADDR[1:0] !=2'b00);
 	}
- awaddr_alignment: coverpoint inp_tx.AWADDR[1:0] {
-	bins alig={2'b00};
-	bins unali={2'b01,2'b10,2'b11};
-	}
-
- awaddrXaddr_align: cross awaddr,awaddr_alignment;
-
  coverpoint inp_tx.AWPROT; 
 endgroup
+
 covergroup cg2;
  wr_strb: coverpoint inp_tx.WSTRB;
 endgroup
 
 covergroup cg3;
- coverpoint out_tx.BRESP{
+ bresp:coverpoint out_tx.BRESP{
      bins okay={2'b00};
      bins slverr={2'b10};
      bins decerr={2'b11};
-
 }
 endgroup
+
 covergroup cg4;
    araddr: coverpoint inp_tx.ARADDR {
-	bins rw={[0:39]};
-	bins r={[40:51]};
-	bins w={[52:59]};
-	bins rwat3C={[60:63]};
+	bins rw={[0:39]} iff (inp_tx.ARADDR[1:0]==2'b00);
+	bins r={[40:51]}iff (inp_tx.ARADDR[1:0]==2'b00);
+	bins w={[52:59]} iff (inp_tx.ARADDR[1:0]==2'b00);
+	bins rwat3C={[60:63]} iff (inp_tx.ARADDR[1:0]==2'b00);
 	bins OFB={[64:$]};
-		}
-   alignVSunalign: coverpoint inp_tx.ARADDR[1:0] {
-	bins align={2'b00};
-	bins unalign={2'b01,2'b10,2'b11};
+        bins unalign={[0:63]} iff (inp_tx.ARADDR[1:0] !=2'b00);
 		}
 endgroup
 covergroup cg5;
@@ -75,25 +67,21 @@ function void write_out(seq_item tr);
 endfunction
 
  function void sampling();
-    if(inp_tx == null || out_tx == null) begin
+    if(inp_tx ==null || out_tx ==null) begin
     return;
   end
     if(inp_tx.AWVALID && out_tx.AWREADY) begin
       cg1.sample();
     end
-
     if(inp_tx.WVALID && out_tx.WREADY) begin
       cg2.sample();
     end
-
     if(out_tx.BVALID && inp_tx.BREADY) begin
       cg3.sample();
     end
-
     if(inp_tx.ARVALID && out_tx.ARREADY) begin
       cg4.sample();
     end
-
     if(out_tx.RVALID && inp_tx.RREADY) begin
       cg5.sample();
     end
